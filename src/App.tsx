@@ -1,5 +1,6 @@
 import './App.css'
-import { actionIncrement, actionUpdateMsg, DataProvider, useDataContext } from './DataProvider'
+import { useDataContext } from './DataProvider'
+import { actionIncrement, actionUpdateMsg } from './reducer'
 
 function App() {
 

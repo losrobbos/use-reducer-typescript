@@ -1,52 +1,9 @@
-import { useReducer } from 'react'
 import './App.css'
-
-enum Actions {
-  INCREMENT = "INCREMENT",
-  UPDATE_MESSAGE = "UPDATE_MESSAGE"
-}
-
-interface State {
-  counter: number,
-  message: string
-}
-
-interface Action {
-  type: string,
-  payload: any
-}
-
-interface ActionIncrement {
-  type: string,
-  payload: number
-}
-
-interface ActionUpdateMsg {
-  type: string,
-  payload: string
-}
-
-const actionCreate = (type: string, payload: any): Action => ({ type, payload })
-const actionIncrement = (): ActionIncrement => actionCreate(Actions.INCREMENT, 1)
-const actionUpdateMsg = (msgNew: string): ActionUpdateMsg => actionCreate(Actions.UPDATE_MESSAGE, msgNew)
-
-const reducer = (state: State, action: Action): State => {
-
-  const { type, payload } = action
-
-  switch (type) {
-    case Actions.INCREMENT:
-      return { ...state, counter: state.counter + payload }
-    case Actions.UPDATE_MESSAGE:
-      return { ...state, message: payload };
-    default:
-      return state
-  }
-}
+import { actionIncrement, actionUpdateMsg, DataProvider, useDataContext } from './DataProvider'
 
 function App() {
 
-  const [state, dispatch] = useReducer(reducer, { counter: 0, message: "Hello" })
+  const { state, dispatch } = useDataContext()
 
   const handleUpdateMessage = () => {
     const msgNew = prompt("New msg pleeze", state.message)

@@ -16,11 +16,11 @@ interface Action {
   payload?: any
 }
 
-const actionCreate = (type: string, payload: any) => ({ type, payload})
+const actionCreate = (type: string, payload: any): Action => ({ type, payload})
 const actionIncrement = () => actionCreate(Actions.INCREMENT, 1)
 const actionUpdateMsg = (msgNew: string) => actionCreate(Actions.UPDATE_MESSAGE, msgNew)
 
-const reducer = (state: any, action: Action): State => {
+const reducer = (state: State, action: Action): State => {
 
   const {  type, payload } = action
 

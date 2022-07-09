@@ -1,6 +1,6 @@
 import './App.css'
 import { useDataContext } from './DataProvider'
-import { actionIncrement, actionUpdateMsg } from './reducer'
+import { actionIncrement, actionSetUser, actionUpdateMsg, User } from './reducer'
 
 function App() {
 
@@ -12,6 +12,11 @@ function App() {
     dispatch(actionUpdateMsg(msgNew))
   }
 
+  const handleLogin = () => {
+    const userFake: User = { _id: Date.now().toString(), email: "user@user.com", token: "ey12345" }
+    dispatch(actionSetUser(userFake)) 
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +26,11 @@ function App() {
         <div onClick={handleUpdateMessage}>
           Message: {state.message}
         </div>
+        {
+          state.user ? 
+          <div>You are logged in, dude!</div> : 
+          <button onClick={handleLogin}>Login</button>
+        }
       </header>
     </div>
   )

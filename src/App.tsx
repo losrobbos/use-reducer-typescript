@@ -26,19 +26,19 @@ interface ActionUpdateMsg {
   payload: string
 }
 
-const actionCreate = (type: string, payload: any): Action => ({ type, payload})
+const actionCreate = (type: string, payload: any): Action => ({ type, payload })
 const actionIncrement = (): ActionIncrement => actionCreate(Actions.INCREMENT, 1)
 const actionUpdateMsg = (msgNew: string): ActionUpdateMsg => actionCreate(Actions.UPDATE_MESSAGE, msgNew)
 
 const reducer = (state: State, action: Action): State => {
 
-  const {  type, payload } = action
+  const { type, payload } = action
 
-  switch(type) {
+  switch (type) {
     case Actions.INCREMENT:
-      return {...state, counter: state.counter + payload}
+      return { ...state, counter: state.counter + payload }
     case Actions.UPDATE_MESSAGE:
-      return {...state, message: payload};
+      return { ...state, message: payload };
     default:
       return state
   }
@@ -46,11 +46,11 @@ const reducer = (state: State, action: Action): State => {
 
 function App() {
 
-  const [state, dispatch] = useReducer(reducer, { counter: 0, message: "Hello" } )
+  const [state, dispatch] = useReducer(reducer, { counter: 0, message: "Hello" })
 
   const handleUpdateMessage = () => {
     const msgNew = prompt("New msg pleeze", state.message)
-    if(!msgNew) return
+    if (!msgNew) return
     dispatch(actionUpdateMsg(msgNew))
   }
 

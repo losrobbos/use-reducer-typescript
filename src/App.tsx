@@ -13,12 +13,22 @@ interface State {
 
 interface Action {
   type: string,
-  payload?: any
+  payload: any
+}
+
+interface ActionIncrement {
+  type: string,
+  payload: number
+}
+
+interface ActionUpdateMsg {
+  type: string,
+  payload: string
 }
 
 const actionCreate = (type: string, payload: any): Action => ({ type, payload})
-const actionIncrement = () => actionCreate(Actions.INCREMENT, 1)
-const actionUpdateMsg = (msgNew: string) => actionCreate(Actions.UPDATE_MESSAGE, msgNew)
+const actionIncrement = (): ActionIncrement => actionCreate(Actions.INCREMENT, 1)
+const actionUpdateMsg = (msgNew: string): ActionUpdateMsg => actionCreate(Actions.UPDATE_MESSAGE, msgNew)
 
 const reducer = (state: State, action: Action): State => {
 

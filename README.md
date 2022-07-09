@@ -7,3 +7,6 @@ Find all relevant code in src/App.tsx:
 - Actions
 - State typing
 - Usage of state & state actions in event handlers
+
+For seing a minimal sample where the useReducer state is provided from a central context provider:
+- switch to branch "with-context"

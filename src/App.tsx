@@ -1,57 +1,27 @@
-import { useReducer } from 'react'
 import './App.css'
-
-enum Actions {
-  INCREMENT = "INCREMENT",
-  UPDATE_MESSAGE = "UPDATE_MESSAGE"
-}
-
-interface State {
-  counter: number,
-  message: string
-}
-
-interface Action {
-  type: string,
-  payload: any
-}
-
-interface ActionIncrement {
-  type: string,
-  payload: number
-}
-
-interface ActionUpdateMsg {
-  type: string,
-  payload: string
-}
-
-const actionCreate = (type: string, payload: any): Action => ({ type, payload })
-const actionIncrement = (): ActionIncrement => actionCreate(Actions.INCREMENT, 1)
-const actionUpdateMsg = (msgNew: string): ActionUpdateMsg => actionCreate(Actions.UPDATE_MESSAGE, msgNew)
-
-const reducer = (state: State, action: Action): State => {
-
-  const { type, payload } = action
-
-  switch (type) {
-    case Actions.INCREMENT:
-      return { ...state, counter: state.counter + payload }
-    case Actions.UPDATE_MESSAGE:
-      return { ...state, message: payload };
-    default:
-      return state
-  }
-}
+import { useDataContext } from './DataProvider'
+import { actionIncrement, actionSetUser, actionUpdateMsg } from './actions'
+import { User } from './types'
 
 function App() {
 
-  const [state, dispatch] = useReducer(reducer, { counter: 0, message: "Hello" })
+  const { state, dispatch } = useDataContext()
 
   const handleUpdateMessage = () => {
-    const msgNew = prompt("New msg pleeze", state.message)
-    if (!msgNew) return
+    const msgNew = "Hello, " + Math.random().toFixed(2)
+    // const msgNew = prompt("New msg pleeze", state.message)
+    // if (!msgNew) return
     dispatch(actionUpdateMsg(msgNew))
+  }
+
+  const toggleLogin = () => {
+    if(!state.user) {
+      const userFake: User = { _id: Date.now().toString(), email: "user@user.com", token: "ey12345" }
+      dispatch(actionSetUser(userFake)) 
+    }
+    else {
+      dispatch(actionSetUser(undefined))
+    }
   }
 
   return (
@@ -60,6 +30,11 @@ function App() {
         <button type="button" onClick={() => dispatch(actionIncrement())}>
           count is: {state.counter}
         </button>
+        {
+          state.user ? 
+          <button onClick={toggleLogin}>Logout</button> :
+          <button onClick={toggleLogin}>Login</button>
+        }
         <div onClick={handleUpdateMessage}>
           Message: {state.message}
         </div>

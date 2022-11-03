@@ -1,62 +1,21 @@
-export interface User {
-  _id: string,
-  email: string,
-  token: string  
-}
+import { ActionsAll, State, ActionTypes } from "./types"
 
-export interface State {
-  counter: number
-  message: string,
-  user?: User
-}
-
-export interface Action {
-  type: string
-  payload: any
-}
-
-export interface ActionIncrement {
-  type: string
-  payload: number
-}
-
-export interface ActionUpdateMsg {
-  type: string
-  payload: string
-}
-
-export interface ActionSetUser {
-  type: string
-  payload: User
-}
-
-export enum Actions {
-  INCREMENT = "INCREMENT",
-  UPDATE_MESSAGE = "UPDATE_MESSAGE",
-  SET_USER = "SET_USER"
-}
-
-// ACTION creators
-const actionCreate = (type: string, payload: any): Action => ({ type, payload })
-export const actionIncrement = (): ActionIncrement =>
-  actionCreate(Actions.INCREMENT, 1)
-export const actionUpdateMsg = (msgNew: string): ActionUpdateMsg =>
-  actionCreate(Actions.UPDATE_MESSAGE, msgNew)
-export const actionSetUser = (user: User): ActionSetUser => 
-  actionCreate(Actions.SET_USER, user)
-
-  // REDUDER function (manages state updates)
-export const reducer = (state: State, action: Action): State => {
+  // REDUCER function (manages state updates)
+export const reducer = (state: State, action: ActionsAll): State => {
   console.log("ACTION received: ", action)
 
   const { type, payload } = action
 
+  /**
+   * Depending on the Action Type 
+   * => Typescript now guess the payload correctly!!!
+   */
   switch (type) {
-    case Actions.INCREMENT:
+    case ActionTypes.INCREMENT:
       return { ...state, counter: state.counter + payload }
-    case Actions.UPDATE_MESSAGE:
+    case ActionTypes.UPDATE_MESSAGE:
       return { ...state, message: payload }
-    case Actions.SET_USER:
+    case ActionTypes.SET_USER:
       return { ...state, user: payload}
     default:
       return state

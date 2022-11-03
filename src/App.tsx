@@ -1,20 +1,27 @@
 import './App.css'
 import { useDataContext } from './DataProvider'
-import { actionIncrement, actionSetUser, actionUpdateMsg, User } from './reducer'
+import { actionIncrement, actionSetUser, actionUpdateMsg } from './actions'
+import { User } from './types'
 
 function App() {
 
   const { state, dispatch } = useDataContext()
 
   const handleUpdateMessage = () => {
-    const msgNew = prompt("New msg pleeze", state.message)
-    if (!msgNew) return
+    const msgNew = "Hello, " + Math.random().toFixed(2)
+    // const msgNew = prompt("New msg pleeze", state.message)
+    // if (!msgNew) return
     dispatch(actionUpdateMsg(msgNew))
   }
 
-  const handleLogin = () => {
-    const userFake: User = { _id: Date.now().toString(), email: "user@user.com", token: "ey12345" }
-    dispatch(actionSetUser(userFake)) 
+  const toggleLogin = () => {
+    if(!state.user) {
+      const userFake: User = { _id: Date.now().toString(), email: "user@user.com", token: "ey12345" }
+      dispatch(actionSetUser(userFake)) 
+    }
+    else {
+      dispatch(actionSetUser(undefined))
+    }
   }
 
   return (
@@ -23,14 +30,14 @@ function App() {
         <button type="button" onClick={() => dispatch(actionIncrement())}>
           count is: {state.counter}
         </button>
+        {
+          state.user ? 
+          <button onClick={toggleLogin}>Logout</button> :
+          <button onClick={toggleLogin}>Login</button>
+        }
         <div onClick={handleUpdateMessage}>
           Message: {state.message}
         </div>
-        {
-          state.user ? 
-          <div>You are logged in, dude!</div> : 
-          <button onClick={handleLogin}>Login</button>
-        }
       </header>
     </div>
   )

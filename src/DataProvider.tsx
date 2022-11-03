@@ -1,21 +1,22 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from "react"
-import { Action, reducer, State } from "./reducer"
+import { ActionsAll, State } from "./actions"
+import { reducer } from "./reducer"
 
 interface Context {
-  state: State, dispatch: Dispatch<Action>
+  state: State, dispatch: Dispatch<ActionsAll>
 }
 
+// Prepare initial state setup
 const initialState: State = { counter: 0, message: "Hello" }
-const initialContext: Context = {
-  state: initialState,
-  dispatch: () => {}
-}
 
+const DataContext = createContext<Context>({} as Context)
 
-const DataContext = createContext<Context>(initialContext)
 export const useDataContext = () => useContext(DataContext)
 
+
+// Provider which shares / provides state to components 
 export const DataProvider = ({children}: { children: ReactNode}) => {
+
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return (

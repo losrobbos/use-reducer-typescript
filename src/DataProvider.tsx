@@ -1,5 +1,5 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from "react"
-import { ActionsAll, State } from "./actions"
+import { ActionsAll, State } from "./types"
 import { reducer } from "./reducer"
 
 interface Context {

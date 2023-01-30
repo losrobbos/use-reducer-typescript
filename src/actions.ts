@@ -10,4 +10,6 @@ export const actionTodoAdd = (todo: Todo): ActionTodoAdd => ({type: ActionTypes.
 export const actionTodoUpdate = (todo: Partial<Todo>) => ({type: ActionTypes.TODO_UPDATE, payload: todo})
 export const actionTodoDelete = (todoId: string) => ({type: ActionTypes.TODO_DELETE, payload: todoId})
 
+// action
+
 // todo: action cars

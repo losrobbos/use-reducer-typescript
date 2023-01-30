@@ -6,13 +6,12 @@ interface Context {
   state: State, dispatch: Dispatch<ActionsAll>
 }
 
-// Prepare initial state setup
-const initialState: State = { counter: 0, message: "Hello" }
-
 const DataContext = createContext<Context>({} as Context)
 
 export const useDataContext = () => useContext(DataContext)
 
+// Prepare initial state (= dummy data)
+const initialState: State = { counter: 0, message: "Hello", todos: [], cars: [] }
 
 // Provider which shares / provides state to components 
 export const DataProvider = ({children}: { children: ReactNode}) => {

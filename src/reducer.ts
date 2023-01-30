@@ -17,6 +17,20 @@ export const reducer = (state: State, action: ActionsAll): State => {
       return { ...state, message: payload }
     case ActionTypes.SET_USER:
       return { ...state, user: payload}
+
+    // the todo actions
+    case ActionTypes.TODO_ADD:
+      return { ...state, todos: [...state.todos, payload] }
+    case ActionTypes.TODO_UPDATE:
+      return { ...state, todos: state.todos.map( todo => {
+        return todo._id === payload._id ? { ...todo, ...payload } : todo
+      }) }
+    case ActionTypes.TODO_DELETE:
+      return { ...state, todos: state.todos.filter( todo => todo._id !== payload ) }
+
+    // todo: the car actions
+
+    // action not known => return current state unchanged
     default:
       return state
   }

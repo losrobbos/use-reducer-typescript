@@ -12,26 +12,32 @@ export const reducer = (state: State, action: ActionsAll): State => {
    */
   switch (type) {
     case ActionTypes.INCREMENT:
-      return { ...state, counter: state.counter + payload }
+      return { ...state, counter: state.counter + payload };
     case ActionTypes.UPDATE_MESSAGE:
-      return { ...state, message: payload }
+      return { ...state, message: payload };
     case ActionTypes.SET_USER:
-      return { ...state, user: payload}
+      return { ...state, user: payload };
 
     // the todo actions
     case ActionTypes.TODO_ADD:
-      return { ...state, todos: [...state.todos, payload] }
-    case ActionTypes.TODO_UPDATE:
-      return { ...state, todos: state.todos.map( todo => {
-        return todo._id === payload._id ? { ...todo, ...payload } : todo
-      }) }
+      return { ...state, todos: [...state.todos, payload] };
     case ActionTypes.TODO_DELETE:
-      return { ...state, todos: state.todos.filter( todo => todo._id !== payload ) }
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo._id !== payload),
+      };
+    case ActionTypes.TODO_UPDATE:
+      return {
+        ...state,
+        todos: state.todos.map((todo) => {
+          return todo._id === payload._id ? { ...todo, ...payload } : todo;
+        }),
+      };
 
     // todo: the car actions
 
     // action not known => return current state unchanged
     default:
-      return state
+      return state;
   }
 }
